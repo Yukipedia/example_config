@@ -44,7 +44,7 @@ local setup = function(_, opts)
           --  With this, you can configure server with 
           --    - .clangd files
           --    - global clangd/config.yaml files
-          --  Read https://clangd.llvm.org/config for more information
+          --  Read the `--enable-config` option in `clangd --help` for more information
           "--enable-config",
         },
         on_attach = function(client, bufnr)
