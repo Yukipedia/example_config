@@ -75,7 +75,7 @@ local plugins = {
 
   {
     "folke/persistence.nvim",
-    event = "BufReadPre",
+    lazy = false,
     module = "persistence",
     opts = {},
   },
@@ -89,8 +89,46 @@ local plugins = {
 
   {
     "kevinhwang91/nvim-ufo",
-    event = { "BufEnter" },
-    dependencies = { "kevinhwang91/promise-async" },
+    event = { "BufReadPost" },
+    dependencies = {
+      "kevinhwang91/promise-async",
+      {
+        "luukvbaal/statuscol.nvim",
+        config = function()
+          local builtin = require("statuscol.builtin")
+          require("statuscol").setup({
+            relculright = true,
+            segments = {
+              { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+              { text = { "%s" }, click = "v:lua.ScSa" },
+              { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa" },
+            },
+          })
+        end,
+      },
+    },
+    init = function()
+      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+      vim.o.foldcolumn = "1" -- '0' is not bad
+      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.o.foldlevelstart = 99
+      vim.o.foldenable = true
+    end,
+    keys = {
+      { "zR", function() require("ufo").openAllFolds() end },
+      { "zM", function() require("ufo").closeAllFolds() end },
+      { "zr", function() require("ufo").openFoldsExceptKinds() end },
+      { "zm", function() require("ufo").closeFoldsWith() end },
+      {
+        "K",
+        function()
+          local winid = require('ufo').peekFoldedLinesUnderCursor()
+          if not winid then
+              vim.lsp.buf.hover()
+          end
+        end
+      }
+    },
     config = function ()
       ---@param bufnr number
       ---@return Promise
@@ -137,22 +175,6 @@ local plugins = {
           table.insert(newVirtText, {suffix, 'MoreMsg'})
           return newVirtText
       end
-
-      vim.o.foldcolumn = '1' -- '0' is not bad
-      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
-
-      vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-      vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)      
-      vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
-      vim.keymap.set('n', 'zm', require('ufo').closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
-      vim.keymap.set('n', 'K', function()
-          local winid = require('ufo').peekFoldedLinesUnderCursor()
-          if not winid then
-              vim.lsp.buf.hover()
-          end
-      end)      
 
       require('ufo').setup({
           provider_selector = function(bufnr, filetype, buftype)
