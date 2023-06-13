@@ -6,7 +6,7 @@ M.general = {
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
   },
   t = {
-    ["<Esc>"] = {"<C-\\><C-n>", "escape terminal mode"}
+    ["jk"] = {"<C-\\><C-n>", "escape terminal mode"}
   },
 }
 

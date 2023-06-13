@@ -1,12 +1,26 @@
--- local autocmd = vim.api.nvim_create_autocmd
+local autocmd = vim.api.nvim_create_autocmd
 
 -- Auto resize panes when resizing nvim window
--- autocmd("VimResized", {
---   pattern = "*",
---   command = "tabdo wincmd =",
--- })
+autocmd("VimResized", {
+  pattern = "*",
+  command = "tabdo wincmd =",
+})
 
-vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+autocmd("BufWinLeave", {
+  pattern = "*.*",
+  command = "mkview",
+})
+
+autocmd("BufWinEnter", {
+  pattern = "*.*",
+  command = "silent! loadview",
+})
+
+vim.opt.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+
+-- https://github.com/fatih/vim-go/issues/502
+-- For me, all the folds were deleted on write.
+vim.g.go_fmt_autosave = 0
 
 if vim.loop.os_uname().sysname == "Windows_NT" then
 	local powershell_options = {
