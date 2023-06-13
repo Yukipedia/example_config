@@ -50,7 +50,7 @@ local plugins = {
   {
     "ggandor/leap.nvim",
     dependencies = "tpope/vim-repeat",
-    lazy = false,
+    event = "BufEnter",
     config = function()
       local leap = require("leap")
       vim.api.nvim_set_hl(0, 'LeapBackdrop', { link = 'Comment' }) -- or some grey
@@ -76,7 +76,6 @@ local plugins = {
   {
     "folke/persistence.nvim",
     lazy = false,
-    module = "persistence",
     opts = {},
   },
 
@@ -89,7 +88,7 @@ local plugins = {
 
   {
     "kevinhwang91/nvim-ufo",
-    event = { "BufReadPost" },
+    lazy = false,
     dependencies = {
       "kevinhwang91/promise-async",
       {
@@ -108,11 +107,12 @@ local plugins = {
       },
     },
     init = function()
-      vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-      vim.o.foldcolumn = "1" -- '0' is not bad
-      vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
-      vim.o.foldlevelstart = 99
-      vim.o.foldenable = true
+      vim.opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+      vim.opt.foldcolumn = "0" -- '0' is not bad
+      vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+      vim.opt.foldlevelstart = 99
+      vim.opt.foldenable = true
+      vim.opt.foldmethod = "manual"
     end,
     keys = {
       { "zR", function() require("ufo").openAllFolds() end },
@@ -142,9 +142,9 @@ local plugins = {
           end
 
           return require('ufo').getFolds(bufnr, 'lsp'):catch(function(err)
-              return handleFallbackException(err, 'treesitter')
+            return handleFallbackException(err, 'treesitter')
           end):catch(function(err)
-              return handleFallbackException(err, 'indent')
+            return handleFallbackException(err, 'indent')
           end)
       end
 
@@ -176,11 +176,29 @@ local plugins = {
           return newVirtText
       end
 
+      local ftMap = {
+        vim = 'indent',
+        python = {'indent'},
+        git = ''
+      }
       require('ufo').setup({
-          provider_selector = function(bufnr, filetype, buftype)
-              return customizeSelector
-          end,
-          fold_virt_text_handler = fold_virt_text_handler
+        preview = {
+            win_config = {
+                border = {'', '─', '', '', '', '─', '', ''},
+                winhighlight = 'Normal:Folded',
+                winblend = 0
+            },
+            mappings = {
+                scrollU = '<C-u>',
+                scrollD = '<C-d>',
+                jumpTop = '[',
+                jumpBot = ']'
+            }
+        },
+        provider_selector = function(bufnr, filetype, buftype)
+            return ftMap[filetype] or customizeSelector
+        end,
+        fold_virt_text_handler = fold_virt_text_handler
       })
     end
   },
@@ -188,7 +206,7 @@ local plugins = {
   -- Language
   {
     "fatih/vim-go",
-    event = "BufEnter",
+    lazy = false,
   },
 
   -- To make a plugin not be loaded
@@ -206,7 +224,6 @@ local plugins = {
   },
 
   -- To use a extras plugin
-  { import = "custom.configs.extras.copilot", },
   { import = "custom.configs.extras.diffview", },
   { import = "custom.configs.extras.mason-extras", },
   { import = "custom.configs.extras.symbols-outline", },

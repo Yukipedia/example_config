@@ -7,6 +7,8 @@ M.general = {
   },
   v = {
     [">"] = { ">gv", "indent"},
+  t = {
+    ["jk"] = {"<C-\\><C-n>", "escape terminal mode"}
   },
 }
 
