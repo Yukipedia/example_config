@@ -203,6 +203,12 @@ local plugins = {
     end
   },
 
+  {
+    "tzachar/local-highlight.nvim",
+    event = "BufEnter",
+    opts = {},
+  },
+
   -- Language
   {
     "fatih/vim-go",
