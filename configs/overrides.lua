@@ -10,6 +10,7 @@ M.treesitter = {
     "typescript",
     "tsx",
     "c",
+    "cmake",
     "markdown",
     "markdown_inline",
   },
@@ -37,6 +38,7 @@ M.mason = {
     -- c/cpp stuff
     "clangd",
     "clang-format",
+    "cmake",
   },
 }
 

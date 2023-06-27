@@ -5,22 +5,15 @@ capabilities.textDocument.foldingRange = {
     lineFoldingOnly = true
 }
 
-local lspconfig = require "lspconfig"
+local lspconfig = require("lspconfig")
 
-local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+local language_servers = lspconfig.util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
 for _, ls in ipairs(language_servers) do
-    require('lspconfig')[ls].setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-    })
+  lspconfig[ls].setup({
+    on_attach = function (client, bufnr)
+      require("lsp-format").on_attach(client)
+      return on_attach(client, bufnr)
+    end,
+    capabilities = capabilities,
+  })
 end
-
--- for _, lsp in ipairs(servers) do
---   lspconfig[lsp].setup {
---     on_attach = on_attach,
---     capabilities = capabilities,
---   }
--- end
-
--- 
--- lspconfig.pyright.setup { blabla}

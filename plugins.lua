@@ -11,10 +11,16 @@ local plugins = {
       -- format & linting
       {
         "jose-elias-alvarez/null-ls.nvim",
+        dependencies = {
+          "davidmh/cspell.nvim",
+        },
         config = function()
           require "custom.configs.null-ls"
         end,
       },
+      {
+        "lukas-reineke/lsp-format.nvim",
+      }
     },
     config = function()
       require "plugins.configs.lspconfig"
