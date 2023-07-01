@@ -1,17 +1,19 @@
 local on_attach = require("plugins.configs.lspconfig").on_attach
 local capabilities = require("plugins.configs.lspconfig").capabilities
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
 
-local lspconfig = require "lspconfig"
+local lspconfig = require("lspconfig")
 
--- if you just want default config for the servers then put them in a table
-local servers = { "html", "cssls", "tsserver", "clangd" }
-
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
+local language_servers = lspconfig.util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+for _, ls in ipairs(language_servers) do
+  lspconfig[ls].setup({
+    on_attach = function (client, bufnr)
+      require("lsp-format").on_attach(client)
+      return on_attach(client, bufnr)
+    end,
     capabilities = capabilities,
-  }
+  })
 end
-
--- 
--- lspconfig.pyright.setup { blabla}
