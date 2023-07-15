@@ -89,7 +89,11 @@ local plugins = {
     "folke/todo-comments.nvim",
     event = "BufEnter",
     dependencies = "nvim-lua/plenary.nvim",
-    opts = {},
+    opts = {
+      colors = {
+        info = { "DiagnosticInformation", "#2563EB" }
+      }
+    },
   },
 
   {
@@ -156,7 +160,7 @@ local plugins = {
 
       local fold_virt_text_handler = function(virtText, lnum, endLnum, width, truncate)
           local newVirtText = {}
-          local suffix = ('  %d '):format(endLnum - lnum)
+          local suffix = (' 󰁂 %d '):format(endLnum - lnum)
           local sufWidth = vim.fn.strdisplaywidth(suffix)
           local targetWidth = width - sufWidth
           local curWidth = 0
@@ -215,11 +219,17 @@ local plugins = {
     opts = {},
   },
 
-  -- Language
   {
-    "fatih/vim-go",
-    lazy = false,
+    "Civitasv/cmake-tools.nvim",
+    event = "BufEnter",
+    dependencies = "nvim-lua/plenary.nvim",
   },
+
+  -- Language
+  -- {
+  --   "fatih/vim-go",
+  --   lazy = false,
+  -- },
 
   -- To make a plugin not be loaded
   -- {

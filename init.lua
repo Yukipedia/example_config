@@ -19,6 +19,11 @@ autocmd("BufWinEnter", {
 })
 
 vim.opt.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.opt.relativenumber = true
+
+-- override NvChad default options
+-- clipboard
+vim.opt.clipboard = ""
 
 -- https://github.com/fatih/vim-go/issues/502
 -- For me, all the folds were deleted on write.
@@ -39,7 +44,6 @@ if vim.loop.os_uname().sysname == "Windows_NT" then
 	end
 end
 
-
 if IN_WSL then
   vim.g.clipboard = {
     name = 'WslClipboard',
@@ -51,6 +55,6 @@ if IN_WSL then
       ["+"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
       ["*"] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
     },
-    cache_enabled = 0,
+    cache_enabled = 1,
   }
 end

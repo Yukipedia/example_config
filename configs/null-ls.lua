@@ -37,6 +37,11 @@ local sources = {
   -- Lua
   b.formatting.stylua,
 
+  -- golang
+  b.formatting.gofumpt,
+  b.formatting.goimports,
+  b.formatting.goimports_reviser,
+
   -- cpp
   b.formatting.clang_format,
   b.formatting.cmake_format,
