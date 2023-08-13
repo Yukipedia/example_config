@@ -8,18 +8,19 @@ autocmd("VimResized", {
   command = "tabdo wincmd =",
 })
 
-autocmd("BufWinLeave", {
-  pattern = "*.*",
-  command = "mkview",
-})
+-- autocmd("BufWinLeave", {
+--   pattern = "*.*",
+--   command = "mkview",
+-- })
+--
+-- autocmd("BufWinEnter", {
+--   pattern = "*.*",
+--   command = "silent! loadview",
+-- })
 
-autocmd("BufWinEnter", {
-  pattern = "*.*",
-  command = "silent! loadview",
-})
-
-vim.opt.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 vim.opt.relativenumber = true
+-- vim.wo.wrap = false
 
 -- override NvChad default options
 -- clipboard

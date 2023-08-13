@@ -6,28 +6,22 @@ M.general = {
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
   },
   t = {
-    ["jk"] = {"<C-\\><C-n>", "escape terminal mode"}
-  },
+    -- Using NvChad mapping <C-x> to Escape terminal mode
+    -- ["jk"] = {"<C-\\><C-n>", "escape terminal mode"}
+  }
 }
 
 M.telescope = {
   n = {
     ["<leader>fs"] = {"<cmd>Telescope lsp_dynamic_workspace_symbols<CR>", "find symbols"},
+    ["<leader>fds"] = {"<cmd>Telescope lsp_document_symbols<CR>", "find document symbols"}
   },
 }
 
 M.symbols_outline = {
   n = {
-    ["<leader>cs"] = { "<cmd>SymbolsOutline<cr>", "Symbols Outline" },
+    ["<leader>cs"] = { "<cmd>SymbolsOutline<CR>", "Symbols Outline" },
   },
-}
-
-M.persistence = {
-  n = {
-    ["<leader>qs"] = {'<cmd>lua require("persistence").load()<CR>', "restore the session for the current directory"},
-    ["<leader>ql"] = {'<cmd>lua require("persistence").load({ last = true })<CR>', "restore the last session"},
-    ["<leader>qd"] = {'<cmd>lua require("persistence").load()<CR>', "stop persistence"},
-  }
 }
 
 M.todo_comments = {
