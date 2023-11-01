@@ -5,6 +5,8 @@ M.general = {
   n = {
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
   },
+  v = {
+    [">"] = { ">gv", "indent"},
   t = {
     -- Using NvChad mapping <C-x> to Escape terminal mode
     -- ["jk"] = {"<C-\\><C-n>", "escape terminal mode"}
