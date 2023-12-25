@@ -50,7 +50,7 @@ end
 ---@type NvPluginSpec
 local spec = {
   "kevinhwang91/nvim-ufo",
-  lazy = false,
+  event = { "VeryLazy", "BufRead" },
   dependencies = {
     "kevinhwang91/promise-async",
     {

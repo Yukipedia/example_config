@@ -7,10 +7,9 @@ local function restore_nvim_tree()
   end
 end
 
-local function close_nvim_tree()
-  local api = require "nvim-tree.api"
-
-  api.tree.close()
+local function close_before_save()
+  require("nvim-tree.api").tree.close()
+  require("symbols-outline").close_outline()
 end
 
 ---@type NvPluginSpec
@@ -26,7 +25,7 @@ local spec = {
         load_on_setup = true,
       },
       -- post_restore_cmds = { restore_nvim_tree },
-      pre_save_cmds = { close_nvim_tree },
+      pre_save_cmds = { close_before_save },
     }
 
     -- using vim api instead keys opts

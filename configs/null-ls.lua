@@ -27,8 +27,8 @@ local cspell_config = {
 local sources = {
   -- cspell.diagnostics.with({ config = cspell_config }),
   -- cspell.code_actions.with({ config = cspell_config }),
-  cspell.diagnostics,
-  cspell.code_actions,
+  -- cspell.diagnostics,
+  -- cspell.code_actions,
 
   -- webdev stuff
   b.formatting.deno_fmt, -- choosed deno for ts/js files cuz its very fast!
@@ -45,6 +45,8 @@ local sources = {
   -- cpp
   b.formatting.clang_format,
   b.formatting.cmake_format,
+
+  --python
 }
 
 null_ls.setup {

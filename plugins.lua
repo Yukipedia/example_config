@@ -2,44 +2,7 @@ local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
-
-  -- Override plugin definition options
-
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-      -- format & linting
-      {
-        "jose-elias-alvarez/null-ls.nvim",
-        dependencies = {
-          "davidmh/cspell.nvim",
-        },
-        config = function()
-          require "custom.configs.null-ls"
-        end,
-      },
-      {
-        "lukas-reineke/lsp-format.nvim",
-      },
-    },
-    config = function()
-      require "plugins.configs.lspconfig"
-      require "custom.configs.lspconfig"
-    end, -- Override to setup mason-lspconfig
-  },
-
-  -- {
-  --   "hrsh7th/nvim-cmp",
-  --   config = function(_, opts)
-  --     require("cmp").setup(opts)
-  --   end,
-  -- },
-
-  -- override plugin configs
-  {
-    "williamboman/mason.nvim",
-    opts = overrides.mason,
-  },
+  { import = "custom.configs.lspconfig" },
 
   {
     "nvim-treesitter/nvim-treesitter",
@@ -64,6 +27,14 @@ local plugins = {
     event = "InsertEnter",
     config = function()
       require("better_escape").setup()
+    end,
+  },
+
+  {
+    "chentoast/marks.nvim",
+    event = "BufEnter",
+    config = function()
+      require("marks").setup()
     end,
   },
 
@@ -195,7 +166,6 @@ local plugins = {
 
   -- To use a extras plugin
   { import = "custom.configs.extras.diffview" },
-  { import = "custom.configs.extras.mason-extras" },
   { import = "custom.configs.extras.symbols-outline" },
   { import = "custom.configs.extras.trouble" },
   { import = "custom.configs.ufo" },
